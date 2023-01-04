@@ -1,7 +1,21 @@
+import { Col, Container, Row } from "react-bootstrap";
+
 export default function Footer() {
     return (
-        <section>
-            Footer
-        </section>
+        <footer style={{
+            width: "100%",
+            position: "relative",
+            bottom: 0,
+            display: "flex",
+            justifyContent: "center"
+        }}>
+            <Container >
+                <Row>
+                    <Col className="text-center py-3">
+                        Made with ❤️ by Prabhat_Sehrawat
+                    </Col>
+                </Row>
+            </Container>
+        </footer>
     );
 }

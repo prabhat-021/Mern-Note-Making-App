@@ -591,8 +591,8 @@ pre code {
 .container-sm,
 .container-xl {
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    /* padding-right: 15px; */
+    /* padding-left: 15px; */
     margin-right: auto;
     margin-left: auto;
 }
@@ -5028,8 +5028,10 @@ input[type="submit"].btn-block {
     .navbar-expand-lg .navbar-collapse {
         display: -ms-flexbox !important;
         display: flex !important;
+        justify-content: space-around;
         -ms-flex-preferred-size: auto;
         flex-basis: auto;
+        margin-left: 19%;
     }
 
     .navbar-expand-lg .navbar-toggler {

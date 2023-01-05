@@ -1,8 +1,12 @@
-import { Button, Card } from "react-bootstrap";
+import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MainScreen from "../components/MainScreen";
+import notes, { } from "../Data/Notes.js";
 
 export default function MyNotes() {
+    function deleteHandler() {
+
+    }
     return (
 
         <MainScreen title="Welcome Back Prabhat Sehrawat...">
@@ -10,35 +14,55 @@ export default function MyNotes() {
                 <Button size="lg" style={{ marginLeft: 10, marginRight: 6 }}>
                     Create New Notes
                 </Button>
-                <Card style={{ margin: 10 }}>
-                    <Card.Header style={{ display: "flex" }}>
-                        <span
-                            style={{
-                                color: "black",
-                                textDecoration: "none",
-                                flex: 1,
-                                cursor: "pointer",
-                                alignSelf: "center",
-                                fontSize: 18,
-                            }}
-                        >{note.title}</span>
-                        <Button href={`/note/${note._id}`}>Edit</Button>
-                        <Button variant="danger" className="mx-2" onClick={() => deleteHandler(note._id)}>Delete</Button>
-                    </Card.Header>
-                    {/* <Card.Body>
-                        <blockquote className="blockquote mb-0">
-                            <p>
-                                {' '}
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                                posuere erat a ante.{' '}
-                            </p>
-                            <footer className="blockquote-footer">
-                                Someone famous in <cite title="Source Title">Source Title</cite>
-                            </footer>
-                        </blockquote>
-                    </Card.Body> */}
-                </Card>
             </Link>
+
+            {
+                notes.map(note => (
+                    <Accordion defaultActiveKey="0">
+                        <Card style={{ margin: 10 }}>
+                            <Card.Header style={{ display: "flex" }}>
+                                <span
+                                    style={{
+                                        color: "black",
+                                        textDecoration: "none",
+                                        flex: 1,
+                                        cursor: "pointer",
+                                        alignSelf: "center",
+                                        fontSize: 18,
+                                    }}
+                                >
+                                    <Accordion.Header
+                                        as={Card.Text}
+                                        variant="link"
+                                        eventKey="0"
+                                    >
+                                        {note.title}
+                                    </Accordion.Header>
+                                </span>
+                                <Button href={`/note/${note._id}`}>Edit</Button>
+                                <Button variant="danger" className="mx-2" onClick={() => deleteHandler(note._id)}>Delete</Button>
+                            </Card.Header>
+                            <Accordion.Body eventKey="0">
+                                <Card.Body>
+                                    <h4>
+                                        <Badge variant="success" >
+                                            Category - {note.category}
+                                        </Badge>
+                                    </h4>
+                                    <blockquote className="blockquote mb-0">
+                                        <p>
+                                            {note.content}
+                                        </p>
+                                        <footer className="blockquote-footer">
+                                            Created on date
+                                        </footer>
+                                    </blockquote>
+                                </Card.Body>
+                            </Accordion.Body>
+                        </Card>
+                    </Accordion>
+                ))
+            }
         </MainScreen>
     );
 }

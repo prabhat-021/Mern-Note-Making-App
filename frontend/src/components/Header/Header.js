@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom';
 
 
 export default function Header() {
@@ -26,7 +27,7 @@ export default function Header() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="">My Notes</Nav.Link>
+                        <Nav.Link><Link to="/mynotes">My Notes</Link></Nav.Link>
                         <NavDropdown title="Prabhat Sehrawat" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="">My Profile</NavDropdown.Item>
                             <NavDropdown.Divider />

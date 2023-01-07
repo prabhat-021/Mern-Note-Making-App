@@ -13,7 +13,14 @@
   font-family: "Work Sans", sans-serif;
   padding: 5px 10px;
 }
-
+.form-css{
+  display: flex;
+  margin: 20px;
+  flex-direction: column;
+}
+.form-link{
+  text-decoration: underline;
+}
 @media only screen and (max-width: 600px) {
   .heading {
     font-size: 30px;

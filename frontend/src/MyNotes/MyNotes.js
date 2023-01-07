@@ -1,11 +1,27 @@
+import { useEffect, useState } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MainScreen from "../components/MainScreen";
-import notes, { } from "../Data/Notes.js";
+import axios from "axios";
 
 export default function MyNotes() {
-    function deleteHandler() {
 
+    const [notes, setNotes] = useState([]);
+
+    const fetchNotes = async () => {
+        const { data } = await axios.get("/api/notes");
+
+        setNotes(data);
+    }
+
+    useEffect(() => {
+        fetchNotes();
+    }, [])
+
+
+    function deleteHandler(id) {
+        if (window.confirm("Are you sure?")) {
+        }
     }
     return (
 
@@ -18,7 +34,7 @@ export default function MyNotes() {
 
             {
                 notes.map(note => (
-                    <Accordion defaultActiveKey="0">
+                    <Accordion defaultActiveKey="0" key={note._id}>
                         <Card style={{ margin: 10 }}>
                             <Card.Header style={{ display: "flex" }}>
                                 <span
@@ -34,7 +50,7 @@ export default function MyNotes() {
                                     <Accordion.Header
                                         as={Card.Text}
                                         variant="link"
-                                        eventKey="0"
+                                        eventkey="0"
                                     >
                                         {note.title}
                                     </Accordion.Header>
@@ -42,7 +58,7 @@ export default function MyNotes() {
                                 <Button href={`/note/${note._id}`}>Edit</Button>
                                 <Button variant="danger" className="mx-2" onClick={() => deleteHandler(note._id)}>Delete</Button>
                             </Card.Header>
-                            <Accordion.Body eventKey="0">
+                            <Accordion.Body eventkey="0">
                                 <Card.Body>
                                     <h4>
                                         <Badge variant="success" >

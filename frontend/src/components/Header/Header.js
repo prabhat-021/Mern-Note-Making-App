@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 
 export default function Header() {
@@ -14,7 +14,7 @@ export default function Header() {
                 <Navbar.Brand href="/">Note Making App</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
-                    <Form inline>
+                    <Form inline="true">
                         <Form.Control
                             type="search"
                             placeholder="Search"
@@ -27,7 +27,7 @@ export default function Header() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link><Link to="/mynotes">My Notes</Link></Nav.Link>
+                        <Nav.Link to="/mynotes"> My Notes</Nav.Link>
                         <NavDropdown title="Prabhat Sehrawat" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="">My Profile</NavDropdown.Item>
                             <NavDropdown.Divider />

@@ -36,9 +36,8 @@ export default function LoginPage() {
         if (userInfo) {
             // history.push("/mynotes")
             navigate("/mynotes")
-
         }
-    }, [userInfo])
+    }, [userInfo, navigate])
 
 
     return (

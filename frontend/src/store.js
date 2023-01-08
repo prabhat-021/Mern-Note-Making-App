@@ -4,13 +4,18 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 // applyMiddleware  will help us to apply Middleware into our application 
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { userLoginReducer } from "./reducers/userReducers";
+import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
 
 const reducer = combineReducers({
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
+    userRegister: userRegisterReducer
 });
 
-const initialState = {};
+const userInformation = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null
+
+const initialState = {
+    userLogin: { userInfo: userInformation }
+};
 const middleware = [thunk];
 
 const store = createStore(
@@ -18,16 +23,3 @@ const store = createStore(
 );
 
 export default store;
-
-
-
-
-
-
-
-
-
-
-
-
-

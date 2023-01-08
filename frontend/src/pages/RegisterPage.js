@@ -1,13 +1,12 @@
 import MainScreen from "../components/MainScreen.js";
 import Loading from "../components/Loading.js";
 import ErrorMessage from "../components/ErrorMessage.js";
-import { Col, Row} from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Form, Button, Col, Row } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import "../components/MainScreen.css";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../actions/userAction.js";
 
 export default function RegisterPage() {
 
@@ -20,37 +19,29 @@ export default function RegisterPage() {
     const [confirmpassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
     const [picMessage, setPicMessage] = useState("");
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
+    const userRegister = useSelector(state => state.userRegister);
+    const navigate = useNavigate();
+
+
+    const { loading, error, userInfo } = userRegister;
 
     async function submitHandler(e) {
         e.preventDefault();
 
         if (password !== confirmpassword) {
-            setMessage("Passwords doesn't match");
+            setMessage("Password dosen't Match");
         } else {
-            setMessage("");
-
-            try {
-                const config = {
-                    headers: {
-                        "Content-type": "application/json"
-                    }
-                }
-                const { data } = await axios.post("/api/users/register", {
-                    name, email, password, pic
-                }, config);
-
-                localStorage.setItem("userInfo", JSON.stringify(data));
-
-                setLoading(false);
-
-            } catch (error) {
-                setError("Invalid Email or Password");
-                setLoading(false);
-            }
+            dispatch(register(name, email, password, pic))
         }
     }
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate("/mynotes")
+        }
+    }, [userInfo, navigate])
 
     const postDetails = (pics) => {
 

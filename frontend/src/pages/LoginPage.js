@@ -4,33 +4,42 @@ import Form from 'react-bootstrap/Form';
 import MainScreen from "../components/MainScreen.js";
 import { Link } from "react-router-dom";
 import "../components/MainScreen.css";
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from "../components/Loading.js";
 import ErrorMessage from "../components/ErrorMessage.js";
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/userAction.js';
+import { useNavigate } from "react-router-dom";
 
-export default function LoginPage({ history }) {
+
+
+export default function LoginPage() {
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     const userLogin = useSelector(state => state.userLogin);
     const { loading, error, userInfo } = userLogin;
 
-    useEffect(() => {
-        if (userInfo) {
-            history.push("/notes")
-        }
-    }, [history,userInfo])
-
     async function submitHandle(e) {
         e.preventDefault();
 
-        dispatch(login(email,password));
+        await dispatch(login(email, password));
     }
+
+    useEffect(() => {
+        if (userInfo) {
+            // history.push("/mynotes")
+            navigate("/mynotes")
+
+        }
+    }, [userInfo])
+
 
     return (
         <MainScreen title="LOGIN">

@@ -4,10 +4,20 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-// import { Link } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../actions/userAction.js';
 
 export default function Header() {
+
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+
+    function logoutHandler() {
+        dispatch(logout());
+    }
+
     return (
         <Navbar bg="primary" expand="lg" varient="dark">
             <Container>
@@ -31,7 +41,7 @@ export default function Header() {
                         <NavDropdown title="Prabhat Sehrawat" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="">My Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="">
+                            <NavDropdown.Item onClick={logoutHandler}>
                                 Logout
                             </NavDropdown.Item>
                         </NavDropdown>

@@ -4,50 +4,32 @@ import Form from 'react-bootstrap/Form';
 import MainScreen from "../components/MainScreen.js";
 import { Link } from "react-router-dom";
 import "../components/MainScreen.css";
-import { useState } from 'react';
-import axios from "axios";
+import { useEffect,useState } from 'react';
 import Loading from "../components/Loading.js";
 import ErrorMessage from "../components/ErrorMessage.js";
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../actions/userAction.js';
 
 export default function LoginPage({ history }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
+    const dispatch = useDispatch();
 
-    //     const userInfo = localStorage.getItem("userInfo");
-    //     if (userInfo) {
-    //         history.push("/notes")
-    //     }
+    const userLogin = useSelector(state => state.userLogin);
+    const { loading, error, userInfo } = userLogin;
 
-    // }, [history])
+    useEffect(() => {
+        if (userInfo) {
+            history.push("/notes")
+        }
+    }, [history,userInfo])
 
     async function submitHandle(e) {
         e.preventDefault();
 
-        try {
-            const config = {
-                headers: {
-                    "Content-type": "application/json"
-                }
-            }
-            setLoading(true);
-
-            const { data } = await axios.post("/api/users/login", {
-                email, password
-            }, config);
-
-            localStorage.setItem("userInfo", JSON.stringify(data));
-
-            setLoading(false);
-
-        } catch (error) {
-            setError("Invalid Email or Password");
-            setLoading(false);
-        }
+        dispatch(login(email,password));
     }
 
     return (

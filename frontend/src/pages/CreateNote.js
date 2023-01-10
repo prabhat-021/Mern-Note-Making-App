@@ -30,8 +30,8 @@ export default function CreateNote() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(createNotes(title, content, category));
         if (!title || !content || !category) return;
+        dispatch(createNotes(title, content, category));
 
         resetHandler();
         navigate("/mynotes");

@@ -15,13 +15,15 @@ export default function MyNotes() {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
     const navigate = useNavigate();
+    const noteCreate = useSelector((state) => state.noteCreate);
+    const { success: successCreate } = noteCreate;
 
     useEffect(() => {
         dispatch(listNotes());
         if (!userInfo) {
             navigate("/");
         }
-    }, [dispatch, navigate ,userInfo])
+    }, [dispatch, navigate, userInfo , successCreate])
 
 
     function deleteHandler(id) {
@@ -31,7 +33,7 @@ export default function MyNotes() {
     return (
 
         <MainScreen title={`Welcome Back ${userInfo.name}...`}>
-            <Link to="createnotes">
+            <Link to="/createnotes">
                 <Button size="lg" style={{ marginLeft: 10, marginRight: 6 }}>
                     Create New Notes
                 </Button>

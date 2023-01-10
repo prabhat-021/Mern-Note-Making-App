@@ -21,7 +21,7 @@ export default function MyNotes() {
         if (!userInfo) {
             navigate("/");
         }
-    }, [dispatch, navigate])
+    }, [dispatch, navigate ,userInfo])
 
 
     function deleteHandler(id) {

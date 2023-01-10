@@ -1,22 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainScreen from "../components/MainScreen";
-import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { listNotes } from "../actions/notesAction";
+import Loading from "../components/Loading.js";
+import Error from "../components/ErrorMessage.js";
 
 export default function MyNotes() {
 
-    const [notes, setNotes] = useState([]);
-
-    const fetchNotes = async () => {
-        const { data } = await axios.get("/api/notes");
-
-        setNotes(data);
-    }
+    const dispatch = useDispatch();
+    const noteList = useSelector((state) => state.noteList);
+    const { loading, error, notes } = noteList;
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetchNotes();
-    }, [])
+        dispatch(listNotes());
+        if (!userInfo) {
+            navigate("/");
+        }
+    }, [dispatch, navigate])
 
 
     function deleteHandler(id) {
@@ -25,15 +30,18 @@ export default function MyNotes() {
     }
     return (
 
-        <MainScreen title="Welcome Back Prabhat Sehrawat...">
+        <MainScreen title={`Welcome Back ${userInfo.name}...`}>
             <Link to="createnotes">
                 <Button size="lg" style={{ marginLeft: 10, marginRight: 6 }}>
                     Create New Notes
                 </Button>
             </Link>
 
+            {error && <Error variant="danger">{error}</Error>}
+            {loading && <Loading />}
+
             {
-                notes.map(note => (
+                notes?.map(note => (
                     <Accordion defaultActiveKey="0" key={note._id}>
                         <Card style={{ margin: 10 }}>
                             <Card.Header style={{ display: "flex" }}>
@@ -70,7 +78,10 @@ export default function MyNotes() {
                                             {note.content}
                                         </p>
                                         <footer className="blockquote-footer">
-                                            Created on date
+                                            Created on:- {" "}
+                                            <cite title="Source Title">
+                                                {note.createdAt.substring(0, 10)}
+                                            </cite>
                                         </footer>
                                     </blockquote>
                                 </Card.Body>

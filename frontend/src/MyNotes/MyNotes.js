@@ -17,13 +17,15 @@ export default function MyNotes() {
     const navigate = useNavigate();
     const noteCreate = useSelector((state) => state.noteCreate);
     const { success: successCreate } = noteCreate;
+    const noteUpdate = useSelector((state) => state.noteUpdate);
+    const { success: successUpdate } = noteUpdate;
 
     useEffect(() => {
         dispatch(listNotes());
         if (!userInfo) {
             navigate("/");
         }
-    }, [dispatch, navigate, userInfo , successCreate])
+    }, [dispatch, navigate, userInfo, successCreate, successUpdate])
 
 
     function deleteHandler(id) {

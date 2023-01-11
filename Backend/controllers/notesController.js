@@ -77,25 +77,6 @@ const updateNote = asyncHandler(async (req, res) => {
 
         }
     }
-
-    const newNote = {
-        user: req.user._id,
-        title: title,
-        content: content,
-        category: category
-    }
-
-    try {
-
-        await Note.findByIdAndUpdate(id, newNote, { new: true });
-        res.status(200).json(newNote);
-
-    } catch (error) {
-
-        console.log(error);
-        res.status(500).json({ message: "Something went Wrong" });
-
-    }
 });
 
 const getNoteById = asyncHandler(async (req, res) => {

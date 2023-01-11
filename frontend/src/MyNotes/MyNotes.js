@@ -7,7 +7,7 @@ import { deleteNote, listNotes } from "../actions/notesAction";
 import Loading from "../components/Loading.js";
 import Error from "../components/ErrorMessage.js";
 
-export default function MyNotes() {
+export default function MyNotes({ search }) {
 
     const dispatch = useDispatch();
     const noteList = useSelector((state) => state.noteList);
@@ -50,7 +50,9 @@ export default function MyNotes() {
             {loadingDelete && <Loading />}
 
             {
-                notes?.map(note => (
+                notes?.reverse().filter((filterNotes) => {
+                    return filterNotes.title.toLowerCase().includes(search.toLowerCase())
+                }).map(note => (
                     <Accordion defaultActiveKey="0" key={note._id}>
                         <Card style={{ margin: 10 }}>
                             <Card.Header style={{ display: "flex" }}>

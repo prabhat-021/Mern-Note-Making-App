@@ -8,7 +8,7 @@ router.route("/").get(auth, getNotes);
 router.route("/create").post(auth, createNote);
 router.route("/:id").get(getNoteById);
 router.route("/:id").put(auth, updateNote);
-router.route("/:id").put(auth, deleteNote);
+router.route("/:id").delete(auth, deleteNote);
 
 
 module.exports = router;

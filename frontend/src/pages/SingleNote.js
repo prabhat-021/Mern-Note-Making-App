@@ -7,6 +7,7 @@ import { updateNotes } from "../actions/notesAction";
 import ErrorMessage from "../components/ErrorMessage";
 import Loading from "../components/Loading";
 import ReactMarkdown from "react-markdown";
+import { deleteNote } from "../actions/notesAction";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function SingleNote() {
@@ -22,6 +23,8 @@ export default function SingleNote() {
 
     const noteUpdate = useSelector((state) => state.noteUpdate);
     const { loading, error } = noteUpdate;
+    const noteDelete = useSelector((state) => state.noteDelete);
+    const { error: errorDelete, loading: loadingDelete } = noteDelete;
 
     useEffect(() => {
         const fetching = async () => {
@@ -51,13 +54,22 @@ export default function SingleNote() {
         navigate("/mynotes");
     };
 
+    function deleteHandler(id) {
+        if (window.confirm("Are you sure?")) {
+            dispatch(deleteNote(id));
+            navigate("/mynotes");
+        }
+    }
+
     return (
         <MainScreen title="Edit Note">
             <Card>
                 <Card.Header>Edit your Note</Card.Header>
                 <Card.Body>
                     <Form onSubmit={updateHandler}>
+                        {errorDelete && <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>}
                         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+                        {loadingDelete && <Loading />}
 
                         <Form.Group controlId="title">
                             <Form.Label>Title</Form.Label>
@@ -104,7 +116,7 @@ export default function SingleNote() {
                         <Button
                             className="mx-2"
                             variant="danger"
-                        // onClick={() => deleteHandler(match.params.id)}
+                            onClick={() => deleteHandler(id)}
                         >
                             Delete Note
                         </Button>

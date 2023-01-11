@@ -3,7 +3,7 @@ import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import MainScreen from "../components/MainScreen";
 import { useDispatch, useSelector } from 'react-redux';
-import { listNotes } from "../actions/notesAction";
+import { deleteNote, listNotes } from "../actions/notesAction";
 import Loading from "../components/Loading.js";
 import Error from "../components/ErrorMessage.js";
 
@@ -19,19 +19,23 @@ export default function MyNotes() {
     const { success: successCreate } = noteCreate;
     const noteUpdate = useSelector((state) => state.noteUpdate);
     const { success: successUpdate } = noteUpdate;
+    const noteDelete = useSelector((state) => state.noteDelete);
+    const { error: errorDelete, loading: loadingDelete, success: successDelete } = noteDelete;
 
     useEffect(() => {
         dispatch(listNotes());
         if (!userInfo) {
             navigate("/");
         }
-    }, [dispatch, navigate, userInfo, successCreate, successUpdate])
+    }, [dispatch, navigate, userInfo, successCreate, successUpdate, successDelete])
 
 
     function deleteHandler(id) {
         if (window.confirm("Are you sure?")) {
+            dispatch(deleteNote(id));
         }
     }
+
     return (
 
         <MainScreen title={`Welcome Back ${userInfo.name}...`}>
@@ -40,9 +44,10 @@ export default function MyNotes() {
                     Create New Notes
                 </Button>
             </Link>
-
+            {errorDelete && <Error variant="danger">{errorDelete}</Error>}
             {error && <Error variant="danger">{error}</Error>}
             {loading && <Loading />}
+            {loadingDelete && <Loading />}
 
             {
                 notes?.map(note => (

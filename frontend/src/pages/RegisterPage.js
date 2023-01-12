@@ -27,23 +27,13 @@ export default function RegisterPage() {
 
     const { loading, error, userInfo } = userRegister;
 
-    async function submitHandler(e) {
-        e.preventDefault();
-
-        if (password !== confirmpassword) {
-            setMessage("Password dosen't Match");
-        } else {
-            dispatch(register(name, email, password, pic))
-        }
-    }
-
     useEffect(() => {
         if (userInfo) {
             navigate("/mynotes")
         }
     }, [userInfo, navigate])
 
-    const postDetails = (pics) => {
+    const postDetails = async (pics) => {
 
         if (!pics) {
             return setPicMessage("Please select a Image ")
@@ -55,7 +45,7 @@ export default function RegisterPage() {
             data.append("file", pics);
             data.append("upload_preset", "Note-making");
             data.append("cloud_name", "prabhat021");
-            fetch("https://api.cloudinary.com/v1_1/prabhat021/image/upload", {
+            await fetch("https://api.cloudinary.com/v1_1/prabhat021/image/upload", {
                 method: "post",
                 body: data,
             }).then((res) => res.json())
@@ -67,6 +57,16 @@ export default function RegisterPage() {
                 });
         } else {
             return setPicMessage("Please Select an Image");
+        }
+    }
+
+    async function submitHandler(e) {
+        e.preventDefault();
+
+        if (password !== confirmpassword) {
+            setMessage("Password dosen't Match");
+        } else {
+            dispatch(register(name, email, password, pic))
         }
     }
 

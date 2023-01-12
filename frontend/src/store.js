@@ -4,7 +4,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 // applyMiddleware  will help us to apply Middleware into our application 
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
+import { userLoginReducer, userRegisterReducer, userUpdateReducer } from "./reducers/userReducers";
 import { noteListReducer, noteCreateReducer, noteUpdateReducer, noteDeleteReducer } from "./reducers/notesReducers";
 
 const reducer = combineReducers({
@@ -13,7 +13,8 @@ const reducer = combineReducers({
     noteList: noteListReducer,
     noteCreate: noteCreateReducer,
     noteUpdate: noteUpdateReducer,
-    noteDelete: noteDeleteReducer
+    noteDelete: noteDeleteReducer,
+    userUpdate: userUpdateReducer
 });
 
 const userInformation = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null

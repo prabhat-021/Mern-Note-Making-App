@@ -1,9 +1,4 @@
-// import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { NavDropdown, Navbar, Nav, Form, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userAction.js';
 import { useNavigate } from "react-router-dom";
@@ -36,20 +31,21 @@ export default function Header({ setSearch }) {
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </Form>
-                    <Nav
+
+                    {userInfo ? <Nav
                         className="me-auto my-2 my-lg-0"
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link to="/mynotes"> My Notes</Nav.Link>
-                        <NavDropdown title={userInfo.name} id="navbarScrollingDropdown">
-                            <NavDropdown.Item href="">My Profile</NavDropdown.Item>
+                        <Nav.Link to="/mynotes" href="/mynotes"> My Notes</Nav.Link>
+                        <NavDropdown title={userInfo?.name} id="navbarScrollingDropdown">
+                            <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={logoutHandler}>
                                 Logout
                             </NavDropdown.Item>
                         </NavDropdown>
-                    </Nav>
+                    </Nav> : <Nav.Link to="/login" href='/login'>Login</Nav.Link>}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

@@ -8,8 +8,9 @@ import RegisterPage from "./pages/RegisterPage.js";
 import CreateNote from './pages/CreateNote.js';
 import SingleNote from './pages/SingleNote.js';
 import { useState } from 'react';
+import UserProfile from './pages/UserProfile.js';
 
-function App() {
+export default function App() {
 
   const [search, setSearch] = useState("");
 
@@ -23,10 +24,9 @@ function App() {
         <Route path='/createnotes' element={<CreateNote />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/note/:id" element={<SingleNote />} />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
       <Footer />
     </BrowserRouter>
   );
 }
-
-export default App;

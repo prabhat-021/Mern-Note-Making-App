@@ -35,7 +35,7 @@ export const listNotes = () => async (dispatch, getState) => {
     }
 }
 
-export const createNotes = (title, category, content) => async (dispatch, getState) => {
+export const createNotes = (title, content, category ) => async (dispatch, getState) => {
 
     try {
         dispatch({ type: NOTE_CREATE_REQUEST });
